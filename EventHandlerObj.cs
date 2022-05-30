@@ -54,6 +54,7 @@ namespace QBToT4PDF
                         //Handle UI Extension Event HERE
                         //MessageBox.Show(sb.ToString(), "UI EXTENSION EVENT - From QB. Start running Code");
                         //Application.Run(new mainDashboardUI());
+                        Console.WriteLine("HELLLLLOO WORLD");
                         break;
 
                     default:
