@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Text;
 using System.Threading;
 using Interop.QBXMLRP2;
+using System.IO;
 
 namespace QBToT4PDF
 {
@@ -666,7 +667,14 @@ namespace QBToT4PDF
         [STAThread]
         static void Main(string[] args)
         {
+            string endDest = ".\\fill_form.pdf";
+            string fileName = ".\\t4sum-fill-21e.pdf";
 
+            FileInfo file = new FileInfo(endDest);
+            file.Directory.Create();
+
+            //InfoProcessor processor = new InfoProcessor();
+            new InfoProcessor().ManipulatePdf(fileName, endDest);
 
 
 
