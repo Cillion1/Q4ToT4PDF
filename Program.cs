@@ -666,6 +666,26 @@ namespace QBToT4PDF
         [STAThread]
         static void Main(string[] args)
         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           // DO NOT REMOVE, This creates and establishes a server
+           /*
             try
             {
                 if (!ProcessArguments(args))
@@ -711,6 +731,7 @@ namespace QBToT4PDF
             {
                 Console.WriteLine("Unexpected error in program - " + ex.Message);
             }
+           */
         }
             
     }
