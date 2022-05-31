@@ -12,5 +12,11 @@ namespace QBToT4PDF
 {
     internal class InfoProcessor
     {
+        public void readExcel()
+        {
+
+        }
     }
+
+
 }
