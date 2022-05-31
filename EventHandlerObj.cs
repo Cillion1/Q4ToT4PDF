@@ -5,7 +5,7 @@ using System.Windows.Forms;  // For using MessageBox.
 using QBSDKEVENTLib; // In order to implement IQBEventCallback.
 using System.Runtime.InteropServices;  // For use of the GuidAttribute, ProgIdAttribute and ClassInterfaceAttribute.
 using System.Xml; //XML Parsing
-
+using System.IO;
 
 namespace QBToT4PDF
 {
@@ -54,7 +54,18 @@ namespace QBToT4PDF
                         //Handle UI Extension Event HERE
                         //MessageBox.Show(sb.ToString(), "UI EXTENSION EVENT - From QB. Start running Code");
                         //Application.Run(new mainDashboardUI());
-                        Console.WriteLine("HELLLLLOO WORLD");
+
+                        // Need to full path the T4 Form
+                        // TODO: Add a way to select a directory in Windows filesystems
+                        string fileName = ".\\t4sum-fill-21e.pdf";
+                        string endDest = ".\\fill_form.pdf";
+
+                        FileInfo file = new FileInfo(endDest);
+                        file.Directory.Create();
+
+                        //InfoProcessor processor = new InfoProcessor();
+                        new InfoProcessor().ManipulatePdf(fileName, endDest);
+
                         break;
 
                     default:

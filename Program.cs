@@ -499,7 +499,7 @@ namespace QBToT4PDF
             //Create the qbXML request
             XmlDocument requestXMLDoc = new XmlDocument();
             requestXMLDoc.AppendChild(requestXMLDoc.CreateXmlDeclaration("1.0", null, null));
-            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"5.0\""));
+            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"13.0\""));
             XmlElement qbXML = requestXMLDoc.CreateElement("QBXML");
             requestXMLDoc.AppendChild(qbXML);
 
@@ -559,7 +559,7 @@ namespace QBToT4PDF
             //Create the qbXML request
             XmlDocument requestXMLDoc = new XmlDocument();
             requestXMLDoc.AppendChild(requestXMLDoc.CreateXmlDeclaration("1.0", null, null));
-            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"5.0\""));
+            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"13.0\""));
             XmlElement qbXML = requestXMLDoc.CreateElement("QBXML");
             requestXMLDoc.AppendChild(qbXML);
 
@@ -624,7 +624,7 @@ namespace QBToT4PDF
             //Create the qbXML request
             XmlDocument requestXMLDoc = new XmlDocument();
             requestXMLDoc.AppendChild(requestXMLDoc.CreateXmlDeclaration("1.0", null, null));
-            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"5.0\""));
+            requestXMLDoc.AppendChild(requestXMLDoc.CreateProcessingInstruction("qbxml", "version=\"13.0\""));
             XmlElement qbXML = requestXMLDoc.CreateElement("QBXML");
             requestXMLDoc.AppendChild(qbXML);
 
@@ -667,6 +667,8 @@ namespace QBToT4PDF
         [STAThread]
         static void Main(string[] args)
         {
+
+            /*
             string endDest = ".\\fill_form.pdf";
             string fileName = ".\\t4sum-fill-21e.pdf";
 
@@ -675,7 +677,7 @@ namespace QBToT4PDF
 
             //InfoProcessor processor = new InfoProcessor();
             new InfoProcessor().ManipulatePdf(fileName, endDest);
-
+            */
 
 
 
@@ -693,7 +695,7 @@ namespace QBToT4PDF
 
 
             // DO NOT REMOVE, This creates and establishes a server
-            /*
+            
              try
              {
                  if (!ProcessArguments(args))
@@ -739,7 +741,7 @@ namespace QBToT4PDF
              {
                  Console.WriteLine("Unexpected error in program - " + ex.Message);
              }
-            */
+            
         }
             
     }
