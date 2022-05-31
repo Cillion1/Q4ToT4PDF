@@ -684,54 +684,54 @@ namespace QBToT4PDF
 
 
 
-           // DO NOT REMOVE, This creates and establishes a server
-           /*
-            try
-            {
-                if (!ProcessArguments(args))
-                {
-                    return;
-                }
+            // DO NOT REMOVE, This creates and establishes a server
+            /*
+             try
+             {
+                 if (!ProcessArguments(args))
+                 {
+                     return;
+                 }
 
-                // Initialize critical member variables.
-                m_iObjsInUse = 0;
-                m_iServerLocks = 0;
-                m_uiMainThreadId = GetCurrentThreadId();
+                 // Initialize critical member variables.
+                 m_iObjsInUse = 0;
+                 m_iServerLocks = 0;
+                 m_uiMainThreadId = GetCurrentThreadId();
 
-                // Register the EventHandlerObjClassFactory.
-                EventHandlerObjClassFactory factory = new EventHandlerObjClassFactory();
-                factory.ClassContext = (uint)CLSCTX.CLSCTX_LOCAL_SERVER;
-                factory.ClassId = Marshal.GenerateGuidForType(typeof(EventHandlerObj));
-                factory.Flags = (uint)REGCLS.REGCLS_MULTIPLEUSE | (uint)REGCLS.REGCLS_SUSPENDED;
-                factory.RegisterClassObject();
-                ClassFactoryBase.ResumeClassObjects();
+                 // Register the EventHandlerObjClassFactory.
+                 EventHandlerObjClassFactory factory = new EventHandlerObjClassFactory();
+                 factory.ClassContext = (uint)CLSCTX.CLSCTX_LOCAL_SERVER;
+                 factory.ClassId = Marshal.GenerateGuidForType(typeof(EventHandlerObj));
+                 factory.Flags = (uint)REGCLS.REGCLS_MULTIPLEUSE | (uint)REGCLS.REGCLS_SUSPENDED;
+                 factory.RegisterClassObject();
+                 ClassFactoryBase.ResumeClassObjects();
 
-                Console.WriteLine("Waiting for QB Customer Add Event .....\n");
-                // Start the message loop.
-                MSG msg;
-                IntPtr null_hwnd = new IntPtr(0);
-                while (GetMessage(out msg, null_hwnd, 0, 0) != false)
-                {
-                    TranslateMessage(ref msg);
-                    DispatchMessage(ref msg);
-                }
-                Console.WriteLine("Out of message loop.");
+                 Console.WriteLine("Waiting for QB Customer Add Event .....\n");
+                 // Start the message loop.
+                 MSG msg;
+                 IntPtr null_hwnd = new IntPtr(0);
+                 while (GetMessage(out msg, null_hwnd, 0, 0) != false)
+                 {
+                     TranslateMessage(ref msg);
+                     DispatchMessage(ref msg);
+                 }
+                 Console.WriteLine("Out of message loop.");
 
-                // Revoke the class factory immediately.
-                // Don't wait until the thread has stopped before
-                // we perform revokation.
-                factory.RevokeClassObject();
-                Console.WriteLine("EventHandlerObjClassFactory Revoked.");
+                 // Revoke the class factory immediately.
+                 // Don't wait until the thread has stopped before
+                 // we perform revokation.
+                 factory.RevokeClassObject();
+                 Console.WriteLine("EventHandlerObjClassFactory Revoked.");
 
-                // Just an indication that this COM EXE Server is stopped.
-                Console.WriteLine("Press [ENTER] to exit.");
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unexpected error in program - " + ex.Message);
-            }
-           */
+                 // Just an indication that this COM EXE Server is stopped.
+                 Console.WriteLine("Press [ENTER] to exit.");
+                 Console.ReadLine();
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine("Unexpected error in program - " + ex.Message);
+             }
+            */
         }
             
     }
