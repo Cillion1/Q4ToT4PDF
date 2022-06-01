@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using Interop.QBXMLRP2;
 using iText.Forms;
 using iText.Forms.Fields;
 using iText.Kernel.Pdf;
@@ -74,7 +76,60 @@ namespace QBToT4PDF
             pdfDocument.Close();
         }
 
-        public static PayrollSumReport getPayrollSumAttribute(string response)
+        public static XmlDocument CreateXmlHeaders()
+        {
+            XmlDocument inputXMLDoc = new XmlDocument();
+            inputXMLDoc.AppendChild(inputXMLDoc.CreateXmlDeclaration("1.0", null, null));
+            inputXMLDoc.AppendChild(inputXMLDoc.CreateProcessingInstruction("qbxml", "version=\"13.0\""));
+
+            // Headers
+            XmlElement qbXML = inputXMLDoc.CreateElement("QBXML");
+            inputXMLDoc.AppendChild(qbXML);
+
+            XmlElement qbXMLMsgsRq = inputXMLDoc.CreateElement("QBXMLMsgsRq");
+            qbXML.AppendChild(qbXMLMsgsRq);
+            qbXMLMsgsRq.SetAttribute("onError", "stopOnError");
+
+            return inputXMLDoc;
+        }
+
+        /// <summary>
+        /// Sends the given XML string to Quickbook and retrieves their response
+        /// </summary>
+        /// <param name="input">a XML string </param>
+        /// <returns>the XML response string from Quickbook</returns>
+        public static string SetupConnection(string input)
+        {
+            RequestProcessor2 rp = null;
+            string ticket = null;
+            string response = null;
+            try
+            {
+                rp = new RequestProcessor2();
+                rp.OpenConnection("", "IDN EmployeeAdd C# sample");
+                ticket = rp.BeginSession("", QBFileMode.qbFileOpenDoNotCare);
+                response = rp.ProcessRequest(ticket, input);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                //MessageBox.Show("COM Error Description = " + ex.Message, "COM error");
+                return ex.Message;
+            }
+            finally
+            {
+                if (ticket != null)
+                {
+                    rp.EndSession(ticket);
+                }
+                if (rp != null)
+                {
+                    rp.CloseConnection();
+                }
+            };
+            return response;
+        }
+
+        public static PayrollSumReport getPayrollSumAttribute(string year)
         {
             //Console.WriteLine(response + "\n");
 
@@ -91,13 +146,10 @@ namespace QBToT4PDF
             XmlElement dateRange = inputXMLDoc.CreateElement("ReportPeriod");
             reportRq.AppendChild(dateRange);
 
-            dateRange.AppendChild(inputXMLDoc.CreateElement("FromReportDate")).InnerText = "2021-01-01";
-            dateRange.AppendChild(inputXMLDoc.CreateElement("ToReportDate")).InnerText = "2021-12-31";
-
+            dateRange.AppendChild(inputXMLDoc.CreateElement("FromReportDate")).InnerText = year + "-01-01";
+            dateRange.AppendChild(inputXMLDoc.CreateElement("ToReportDate")).InnerText = year + "-12-31";
 
             reportRq.AppendChild(inputXMLDoc.CreateElement("SummarizeColumnsBy")).InnerText = "TotalOnly";
-
-
 
             string input = inputXMLDoc.OuterXml;
 
@@ -107,22 +159,10 @@ namespace QBToT4PDF
             XmlDocument outputXMLDoc = new XmlDocument();
             outputXMLDoc.LoadXml(response);
 
-            /*            XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("PayrollSummaryReportQueryRs");
-                        XmlNodeList PayrollSummaryReportQueryRs = qbXMLMsgsRsNodeList.Item(0).ChildNodes;
-                        XmlNodeList ReportRet = PayrollSummaryReportQueryRs.Item(0).ChildNodes;*/
             XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("ReportData");
             XmlNodeList ReportData = qbXMLMsgsRsNodeList.Item(0).ChildNodes;
-            XmlNodeList qbXMLMsgsRsNodeList2 = outputXMLDoc.GetElementsByTagName("ReportRet");
-            XmlNodeList ReportRet = qbXMLMsgsRsNodeList2.Item(0).ChildNodes;
 
-            XmlNodeList qbXMLMsgsRsNodeList3 = outputXMLDoc.GetElementsByTagName("DataRow");
-            XmlNodeList DataRow = qbXMLMsgsRsNodeList3.Item(0).ChildNodes;
-            XmlNodeList qbXMLMsgsRsNodeList4 = outputXMLDoc.GetElementsByTagName("SubtotalRow");
-            XmlNodeList SubtotalRow = qbXMLMsgsRsNodeList4.Item(0).ChildNodes;
-
-            string rowNumber = "";
             PayrollSumReport report = new PayrollSumReport();
-
 
             foreach (XmlNode node in ReportData)
             {
@@ -166,6 +206,14 @@ namespace QBToT4PDF
                     }
                 }
             }
+
+            report.incomeTaxDeducted = report.incomeTaxDeducted.Trim().Replace("-", String.Empty);
+            report.employerCPPContribution = report.employerCPPContribution.Trim().Replace("-", String.Empty);
+            report.employeeCPPContribution = report.employeeCPPContribution.Trim().Replace("-", String.Empty);
+            report.employeeEIPremium = report.employeeEIPremium.Trim().Replace("-", String.Empty);
+            report.employerEIPremium = report.employerEIPremium.Trim().Replace("-", String.Empty);
+            report.employmentIncome = report.employmentIncome.Trim().Replace("-", String.Empty);
+            report.calTotalDeduction();
             return report;
         }
 

@@ -4,16 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Q4ToT4PDF
+namespace QBToT4PDF
 {
     public class PayrollSumReport
     {
+        // Box 14
         public string employmentIncome { get; set; }
+        // Box 16
         public string employeeCPPContribution { get; set; }
+        // Box 27
         public string employerCPPContribution { get; set; }
+        // Box 18
         public string employeeEIPremium { get; set; }
+        // Box 19
         public string employerEIPremium { get; set; }
+        // Box 22
         public string incomeTaxDeducted { get; set; }
+        // Box 80 
+        // add all the above values up to get the total deduction
         public string totalDeductionsReported { get; set; }
+
+        public void calTotalDeduction()
+        {
+           double temp = Convert.ToDouble(this.incomeTaxDeducted) + Convert.ToDouble(this.employerCPPContribution) + Convert.ToDouble(this.employeeCPPContribution) + Convert.ToDouble(this.employeeEIPremium) + Convert.ToDouble(this.employerEIPremium);
+           this.totalDeductionsReported = Convert.ToString(temp);
+        }
     }
+
+
 }
