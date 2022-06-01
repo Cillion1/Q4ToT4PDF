@@ -9,31 +9,31 @@ using System.IO;
 
 namespace QBToT4PDF
 {
-	[
+    [
       Guid("62447F81-C195-446f-8201-94F0614E49D5"),  // We indicate a specific CLSID for "QBToT4PDF.EventHandlerObj" for convenience of searching the registry.
       ProgId("SubscribeAndHandleQBEvent.EventHandlerObj"),  // This ProgId is used by default. Not 100% necessary.
-      ClassInterface(ClassInterfaceType.None)  
+      ClassInterface(ClassInterfaceType.None)
     ]
-	public class EventHandlerObj :
+    public class EventHandlerObj :
         ReferenceCountedObjectBase, // EventHandlerObj is derived from ReferenceCountedObjectBase so that we can track its creation and destruction.
-		IQBEventCallback  // this must implement the IQBEventCallback interface.
-	{
-		
-		public EventHandlerObj()
-		{
-			// ReferenceCountedObjectBase constructor will be invoked.
+        IQBEventCallback  // this must implement the IQBEventCallback interface.
+    {
+
+        public EventHandlerObj()
+        {
+            // ReferenceCountedObjectBase constructor will be invoked.
             Console.WriteLine("EventHandlerObj constructor.");
-		}
+        }
 
         ~EventHandlerObj()
-		{
-			// ReferenceCountedObjectBase destructor will be invoked.
+        {
+            // ReferenceCountedObjectBase destructor will be invoked.
             Console.WriteLine("EventHandlerObj destructor.");
-		}
+        }
 
         //Call back function which would be invoked from the QB
-		public void inform(string strMessage)
-		{
+        public void inform(string strMessage)
+        {
             try
             {
                 StringBuilder sb = new StringBuilder(strMessage);
@@ -41,7 +41,7 @@ namespace QBToT4PDF
                 outputXMLDoc.LoadXml(strMessage);
                 XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("QBXMLEvents");
                 XmlNode childNode = qbXMLMsgsRsNodeList.Item(0).FirstChild;
-                
+
                 // handle the event based on type of event
                 switch (childNode.Name)
                 {
@@ -57,14 +57,9 @@ namespace QBToT4PDF
 
                         // Need to full path the T4 Form
                         // TODO: Add a way to select a directory in Windows filesystems
-                        string fileName = ".\\t4sum-fill-21e.pdf";
-                        string endDest = ".\\fill_form.pdf";
+                        //string fileName = ".\\t4sum-fill-21e.pdf";
 
-                        FileInfo file = new FileInfo(endDest);
-                        file.Directory.Create();
-
-                        //InfoProcessor processor = new InfoProcessor();
-                        new InfoProcessor().ManipulatePdf(fileName, endDest);
+                        OpenT4Form();
 
                         break;
 
@@ -72,14 +67,57 @@ namespace QBToT4PDF
                         MessageBox.Show(sb.ToString(), "Response From QB");
                         break;
                 }
-                               
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Unexpected error in processing the response from QB - " + ex.Message);
             }
-		}
-	}
+        }
+
+        public static void OpenT4Form()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"D:\",
+                Title = "Browse Text Files",
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "pdf",
+                Filter = "pdf files (*.pdf)|*.pdf",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+                Debug.WriteLine(filePath);
+
+                FileInfo file_info = new FileInfo(filePath);
+                string fileName = Path.GetFileNameWithoutExtension(file_info.ToString());
+                Debug.WriteLine(fileName);
+
+                string endDest = file_info.DirectoryName + "\\" + fileName + "123.pdf";
+                Debug.WriteLine(endDest);
+
+                FileInfo file = new FileInfo(endDest);
+                file.Directory.Create();
+
+                //InfoProcessor processor = new InfoProcessor();
+                new InfoProcessor().ManipulatePdf(filePath, endDest);
+            }
+            else
+            {
+                Debug.WriteLine("Something broke");
+            }
+        }
+    }
 
     class EventHandlerObjClassFactory : ClassFactoryBase
 	{

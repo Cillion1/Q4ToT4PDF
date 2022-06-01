@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using Interop.QBXMLRP2;
 using System.IO;
+using System.Diagnostics;
 
 namespace QBToT4PDF
 {
@@ -667,20 +668,19 @@ namespace QBToT4PDF
         [STAThread]
         static void Main(string[] args)
         {
-
             /*
             string endDest = ".\\fill_form.pdf";
-            string fileName = ".\\t4sum-fill-21e.pdf";
+            string filePath = ".\\t4sum-fill-21e.pdf";
 
             FileInfo file = new FileInfo(endDest);
             file.Directory.Create();
 
             //InfoProcessor processor = new InfoProcessor();
-            new InfoProcessor().ManipulatePdf(fileName, endDest);
+            new InfoProcessor().ManipulatePdf(filePath, endDest);
             */
 
 
-
+            /*
             PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
             Console.WriteLine("HIIII");
             Console.WriteLine(report.incomeTaxDeducted);
@@ -691,9 +691,9 @@ namespace QBToT4PDF
             Console.WriteLine(report.employmentIncome);
             Console.WriteLine(report.totalDeductionsReported);
             Console.ReadLine();
+            */
 
-
-
+            //EventHandlerObj.OpenT4Form();
 
 
 
@@ -751,6 +751,5 @@ namespace QBToT4PDF
             }*/
 
         }
-            
     }
 }
