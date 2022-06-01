@@ -27,7 +27,7 @@ namespace QBToT4PDF
             
         }
 
-        public virtual void ManipulatePdf(String src, String dest)
+        public virtual void ManipulatePdf(String src, String dest, PayrollSumReport report)
         {
             //Initialize PDF document
             PdfReader pdfReader = new PdfReader(src);
@@ -38,15 +38,41 @@ namespace QBToT4PDF
             IDictionary<String, PdfFormField> fields = form.GetFormFields();
             PdfFormField toSet;
 
-            
+
+            //----Start of inputting T4 Summary
+            // form1[0].Page1[0].Border[0].EmployerInfo[0].Employe]rName[0
+            //Box 14 - Emploment Income
+            fields.TryGetValue("form1[0].Page1[0].Border[0].LeftFields[0].Line14[0].Box14[0]", out toSet);
+            toSet.SetValue(report.employmentIncome);
+            //Box 16 - Employees CPP Contribution
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line16[0].Box16[0]", out toSet);
+            toSet.SetValue(report.employeeCPPContribution);
+            //Box 27 - Employer's CPP contributions
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line27[0].Box27[0]", out toSet);
+            toSet.SetValue(report.employerCPPContribution);
+            //Box 18 - Employees' EI premiums
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line18[0].Box18[0]", out toSet);
+            toSet.SetValue(report.employeeEIPremium);
+            //Box 19 - Employer's EI premiums
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line19[0].Box19[0]", out toSet);
+            toSet.SetValue(report.employerEIPremium);
+            //Box 22 - Income tax deducted
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line22[0].Box22[0]", out toSet);
+            toSet.SetValue(report.incomeTaxDeducted);
+            //Box 80 - Total deductions reported
+            fields.TryGetValue("form1[0].Page1[0].Border[0].MiddleFields[0].Line80[0].Box80[0]", out toSet);
+            toSet.SetValue(report.totalDeductionsReported);
+
+
+            /*
             foreach (var item in fields)
             {
                 fields.TryGetValue(item.Key, out toSet);
                 toSet.SetValue(item.Key);
                 //Debug.WriteLine(item.Key);
             }
+            */
 
-            // form1[0].Page1[0].Border[0].EmployerInfo[0].EmployerName[0]
 
             //fields.TryGetValue("form1[0].Page1[0].Border[0].EmployerInfo[0].EmployerName[0]", out toSet);
             //toSet.SetValue("James Bond");
@@ -93,6 +119,7 @@ namespace QBToT4PDF
             return inputXMLDoc;
         }
 
+
         /// <summary>
         /// Sends the given XML string to Quickbook and retrieves their response
         /// </summary>
@@ -128,6 +155,7 @@ namespace QBToT4PDF
             };
             return response;
         }
+
 
         public static PayrollSumReport getPayrollSumAttribute(string year)
         {
