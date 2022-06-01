@@ -693,7 +693,7 @@ namespace QBToT4PDF
             Console.ReadLine();
             */
 
-            //EventHandlerObj.OpenT4Form();
+            EventHandlerObj.OpenT4Form();
 
 
 

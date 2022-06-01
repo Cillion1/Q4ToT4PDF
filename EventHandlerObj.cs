@@ -77,6 +77,8 @@ namespace QBToT4PDF
 
         public static void OpenT4Form()
         {
+            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
+
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
                 InitialDirectory = @"D:\",
@@ -110,7 +112,7 @@ namespace QBToT4PDF
                 file.Directory.Create();
 
                 //InfoProcessor processor = new InfoProcessor();
-                new InfoProcessor().ManipulatePdf(filePath, endDest);
+                new InfoProcessor().ManipulatePdf(filePath, endDest, report);
             }
             else
             {
