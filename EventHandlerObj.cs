@@ -59,12 +59,13 @@ namespace QBToT4PDF
                         // TODO: Add a way to select a directory in Windows filesystems
                         string fileName = ".\\t4sum-fill-21e.pdf";
                         string endDest = ".\\fill_form.pdf";
+                        PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
 
                         FileInfo file = new FileInfo(endDest);
                         file.Directory.Create();
 
                         //InfoProcessor processor = new InfoProcessor();
-                        new InfoProcessor().ManipulatePdf(fileName, endDest);
+                        new InfoProcessor().ManipulatePdf(fileName, endDest, report);
 
                         break;
 

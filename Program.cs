@@ -668,7 +668,19 @@ namespace QBToT4PDF
         static void Main(string[] args)
         {
 
-            /*
+            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
+            
+            Console.WriteLine("Payroll information: ");
+            Console.WriteLine("IncomeTaxDeducted: "+ report.incomeTaxDeducted);
+            Console.WriteLine("EmployerCPPContribution: " + report.employerCPPContribution);
+            Console.WriteLine("EmployeeCPPContribution: " + report.employeeCPPContribution);
+            Console.WriteLine("EmployeeEIPremium: " + report.employeeEIPremium);
+            Console.WriteLine("EmployerEIPremium: " + report.employerEIPremium);
+            Console.WriteLine("EmploymentIncome: " + report.employmentIncome);
+            Console.WriteLine("TotalDeductionsReported: " + report.totalDeductionsReported);
+            Console.ReadLine();
+            
+
             string endDest = ".\\fill_form.pdf";
             string fileName = ".\\t4sum-fill-21e.pdf";
 
@@ -676,29 +688,7 @@ namespace QBToT4PDF
             file.Directory.Create();
 
             //InfoProcessor processor = new InfoProcessor();
-            new InfoProcessor().ManipulatePdf(fileName, endDest);
-            */
-
-
-
-            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
-            Console.WriteLine("HIIII");
-            Console.WriteLine(report.incomeTaxDeducted);
-            Console.WriteLine(report.employerCPPContribution);
-            Console.WriteLine(report.employeeCPPContribution);
-            Console.WriteLine(report.employeeEIPremium);
-            Console.WriteLine(report.employerEIPremium);
-            Console.WriteLine(report.employmentIncome);
-            Console.WriteLine(report.totalDeductionsReported);
-            Console.ReadLine();
-
-
-
-
-
-
-
-
+            new InfoProcessor().ManipulatePdf(fileName, endDest, report);
 
 
 
@@ -751,6 +741,6 @@ namespace QBToT4PDF
             }*/
 
         }
-            
+
     }
 }
