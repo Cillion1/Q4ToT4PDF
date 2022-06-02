@@ -52,13 +52,6 @@ namespace QBToT4PDF
 
                     case "UIExtensionEvent":
                         //Handle UI Extension Event HERE
-                        //MessageBox.Show(sb.ToString(), "UI EXTENSION EVENT - From QB. Start running Code");
-                        //Application.Run(new mainDashboardUI());
-
-                        // Need to full path the T4 Form
-                        // TODO: Add a way to select a directory in Windows filesystems
-                        //string fileName = ".\\t4sum-fill-21e.pdf";
-
                         OpenT4Form();
                         
                         break;
@@ -75,13 +68,20 @@ namespace QBToT4PDF
             }
         }
 
+        /// <summary>
+        /// Function to run when an event is processed
+        /// 
+        /// Opens a file dialog to grab the T4 pdf file and creates a new file with a filled-in T4 form file.
+        /// 
+        /// NOTE: must have Quickbook with a company file open
+        /// </summary>
         public static void OpenT4Form()
         {
             PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
             report = InfoProcessor.getEmpdata(report, "2021");
             Company company = InfoProcessor.getCompanyInfo();
 
-
+            // Define file dialog filters
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
                 InitialDirectory = @"D:\",
@@ -99,6 +99,7 @@ namespace QBToT4PDF
                 ShowReadOnly = true
             };
 
+            // User starts choosing a file
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog1.FileName;
