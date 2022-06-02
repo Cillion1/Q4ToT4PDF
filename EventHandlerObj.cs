@@ -78,6 +78,9 @@ namespace QBToT4PDF
         public static void OpenT4Form()
         {
             PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
+            report = InfoProcessor.getEmpdata(report, "2021");
+            Company company = InfoProcessor.getCompanyInfo();
+
 
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
@@ -112,7 +115,7 @@ namespace QBToT4PDF
                 file.Directory.Create();
 
                 //InfoProcessor processor = new InfoProcessor();
-                new InfoProcessor().ManipulatePdf(filePath, endDest, report);
+                new InfoProcessor().ManipulatePdf(filePath, endDest, report, company);
                 MessageBox.Show("Finished Creating T4 PDF file", "T4 Form");
 
             }

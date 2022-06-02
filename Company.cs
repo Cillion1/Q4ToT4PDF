@@ -11,6 +11,16 @@ namespace QBToT4PDF
         public string name { get; set; }
         public string addressBlock { get; set; }
         public string addressFull { get; set; }
+        public string phone { get; set; }
+
+        public Company()
+        {
+            name = "";
+            addressBlock = "";
+            addressFull = "";
+            phone = "";
+        }
+         
 
     }
 }

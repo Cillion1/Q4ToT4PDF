@@ -8,6 +8,9 @@ namespace QBToT4PDF
 {
     public class PayrollSumReport
     {
+        public string year { get; set; }
+        public string numEmployee { get; set; }
+
         // Box 14
         public string employmentIncome { get; set; }
         // Box 16
@@ -23,6 +26,18 @@ namespace QBToT4PDF
         // Box 80 
         // add all the above values up to get the total deduction
         public string totalDeductionsReported { get; set; }
+
+        public PayrollSumReport()
+        {
+            employmentIncome = "0";
+            employeeCPPContribution = "0";
+            employerCPPContribution = "0";
+            employeeEIPremium = "0";
+            employerEIPremium = "0";
+            incomeTaxDeducted = "0";
+            totalDeductionsReported = "0";
+            numEmployee = "0";
+        }
 
         public void calTotalDeduction()
         {
