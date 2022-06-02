@@ -693,9 +693,8 @@ namespace QBToT4PDF
             Console.ReadLine();
             */
 
-            InfoProcessor.getCompanyinfo();
 
-            //EventHandlerObj.OpenT4Form();
+            EventHandlerObj.OpenT4Form();
 
 
 
