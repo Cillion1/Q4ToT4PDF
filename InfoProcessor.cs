@@ -156,7 +156,11 @@ namespace QBToT4PDF
             return response;
         }
 
-
+        /// <summary>
+        /// Getting data for T4 Summary Report
+        /// </summary>
+        /// <param name="year">the year of the T4 Summary report </param>
+        /// <returns> an object that holds data for the T4 Summary Report Quickbook</returns>
         public static PayrollSumReport getPayrollSumAttribute(string year)
         {
             //Console.WriteLine(response + "\n");
