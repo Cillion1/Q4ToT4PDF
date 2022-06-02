@@ -60,7 +60,7 @@ namespace QBToT4PDF
                         //string fileName = ".\\t4sum-fill-21e.pdf";
 
                         OpenT4Form();
-
+                        
                         break;
 
                     default:
@@ -113,10 +113,12 @@ namespace QBToT4PDF
 
                 //InfoProcessor processor = new InfoProcessor();
                 new InfoProcessor().ManipulatePdf(filePath, endDest, report);
+                MessageBox.Show("Finished Creating T4 PDF file", "T4 Form");
+
             }
             else
             {
-                Debug.WriteLine("Something broke");
+                MessageBox.Show("Error: Could not fill in T4 form");
             }
         }
     }

@@ -693,7 +693,7 @@ namespace QBToT4PDF
             Console.ReadLine();
             */
 
-            EventHandlerObj.OpenT4Form();
+            //EventHandlerObj.OpenT4Form();
 
 
 
@@ -704,7 +704,7 @@ namespace QBToT4PDF
 
             // DO NOT REMOVE, This creates and establishes a server
 
-            /*try
+            try
             {
                 if (!ProcessArguments(args))
                 {
@@ -748,7 +748,7 @@ namespace QBToT4PDF
             catch (Exception ex)
             {
                 Console.WriteLine("Unexpected error in program - " + ex.Message);
-            }*/
+            }
 
         }
     }
