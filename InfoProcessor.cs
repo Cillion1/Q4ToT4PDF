@@ -26,7 +26,13 @@ namespace QBToT4PDF
 
             
         }
-
+        /// <summary>
+        /// Takes Quickbook data and adds it to a PDF file of a T4 Summary form
+        /// </summary>
+        /// <param name="src">Path of the T4 Summary pdf file</param>
+        /// <param name="dest">Path of the filled in T4 Summary file</param>
+        /// <param name="report">report class containing T4 summary attributes</param>
+        /// <param name="company">company class containing information relevant to a T4 summary</param>
         public virtual void ManipulatePdf(String src, String dest, PayrollSumReport report, Company company)
         {
             //Initialize PDF document
@@ -38,12 +44,7 @@ namespace QBToT4PDF
             IDictionary<String, PdfFormField> fields = form.GetFormFields();
             PdfFormField toSet;
 
-
             //----Start of inputting T4 Summary
-            // form1[0].Page1[0].Border[0].EmployerInfo[0].Employe]rName[0
-
-            // form1[0].Page1[0].Date[0] - Date
-            // form1[0].Page1[0].Border[0].EmployerInfo[0].EmployerName[0] - address
 
             // Date of Tax Year
             fields.TryGetValue("form1[0].Page1[0].Date[0]", out toSet);
@@ -119,19 +120,26 @@ namespace QBToT4PDF
             fields.TryGetValue("info", out toSet);
             toSet.SetValue("I was 38 years old when I became an MI6 agent.");
             */
+
+            // Closes the PDF.
             pdfDocument.Close();
         }
 
+        /// <summary>
+        /// Defines the start of a QBXML Message Request
+        /// </summary>
+        /// <returns>the body of a QBXML request</returns>
         public static XmlDocument CreateXmlHeaders()
         {
             XmlDocument inputXMLDoc = new XmlDocument();
             inputXMLDoc.AppendChild(inputXMLDoc.CreateXmlDeclaration("1.0", null, null));
             inputXMLDoc.AppendChild(inputXMLDoc.CreateProcessingInstruction("qbxml", "version=\"13.0\""));
 
-            // Headers
+            // Define Headers
             XmlElement qbXML = inputXMLDoc.CreateElement("QBXML");
             inputXMLDoc.AppendChild(qbXML);
 
+            // Define that we want to start a request
             XmlElement qbXMLMsgsRq = inputXMLDoc.CreateElement("QBXMLMsgsRq");
             qbXML.AppendChild(qbXMLMsgsRq);
             qbXMLMsgsRq.SetAttribute("onError", "stopOnError");
@@ -207,6 +215,7 @@ namespace QBToT4PDF
 
             string response = SetupConnection(input);
 
+            // Start parsing through the response
             XmlDocument outputXMLDoc = new XmlDocument();
             outputXMLDoc.LoadXml(response);
 
@@ -258,6 +267,7 @@ namespace QBToT4PDF
                 }
             }
 
+            // Save the info from response into a Report class
             report.incomeTaxDeducted = report.incomeTaxDeducted.Trim().Replace("-", String.Empty);
             report.employerCPPContribution = report.employerCPPContribution.Trim().Replace("-", String.Empty);
             report.employeeCPPContribution = report.employeeCPPContribution.Trim().Replace("-", String.Empty);
@@ -270,7 +280,10 @@ namespace QBToT4PDF
             return report;
         }
 
-
+        /// <summary>
+        /// Queries the company information from Quickbook
+        /// </summary>
+        /// <returns>A company instance with company information filled in</returns>
         public static Company getCompanyInfo()
         {
 
@@ -291,6 +304,7 @@ namespace QBToT4PDF
             XmlDocument outputXMLDoc = new XmlDocument();
             outputXMLDoc.LoadXml(response);
 
+            // Start parsing through the response
             XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("CompanyRet");
             XmlNodeList CompanyRet = qbXMLMsgsRsNodeList.Item(0).ChildNodes;
 
@@ -331,7 +345,12 @@ namespace QBToT4PDF
             return company;
         }
 
-
+        /// <summary>
+        /// Grabs an existing report and adds the amount of employees paid in the given tax year
+        /// </summary>
+        /// <param name="report">a report instance of PayrollSumReport</param>
+        /// <param name="year">specified tax year</param>
+        /// <returns></returns>
         public static PayrollSumReport getEmpdata(PayrollSumReport report, String year)
         {
             //Console.WriteLine(response + "\n");
@@ -358,11 +377,15 @@ namespace QBToT4PDF
 
             string response = SetupConnection(input);
 
-            Debug.WriteLine(response + "\n");
+            // Start parsing through the response
             XmlDocument outputXMLDoc = new XmlDocument();
             outputXMLDoc.LoadXml(response);
 
             XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("NumColumns");
+
+            // Grabs the number of columns to compute number of paid employees.
+            // Paid employee has 3 columns. There are also an extra 4 rows in both the row names and the Total column.
+            // Subtracting 4 and dividing it by 3 will return the number of paid employees
             report.numEmployee = ((Int16.Parse(qbXMLMsgsRsNodeList[0].InnerText) - 4) / 3).ToString() ;
 
             //Debug.WriteLine(response + "\n");
