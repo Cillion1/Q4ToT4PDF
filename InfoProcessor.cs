@@ -156,7 +156,11 @@ namespace QBToT4PDF
             return response;
         }
 
-
+        /// <summary>
+        /// Getting data for T4 Summary Report
+        /// </summary>
+        /// <param name="year">the year of the T4 Summary report </param>
+        /// <returns> an object that holds data for the T4 Summary Report Quickbook</returns>
         public static PayrollSumReport getPayrollSumAttribute(string year)
         {
             //Console.WriteLine(response + "\n");
@@ -246,6 +250,59 @@ namespace QBToT4PDF
         }
 
 
+        public static Company getCompanyInfo()
+        {
+
+            XmlDocument inputXMLDoc = CreateXmlHeaders();
+            XmlElement qbXMLMsgsRq = (XmlElement)inputXMLDoc.GetElementsByTagName("QBXMLMsgsRq")[0];
+
+            XmlElement CompanyQueryRq = inputXMLDoc.CreateElement("CompanyQueryRq");
+            qbXMLMsgsRq.AppendChild(CompanyQueryRq);
+
+            //CompanyQueryRq.AppendChild(inputXMLDoc.CreateElement("IncludeRetElement")).InnerText = "EIN";
+
+            string input = inputXMLDoc.OuterXml;
+
+            string response = SetupConnection(input);
+
+            Console.WriteLine(response);
+
+            XmlDocument outputXMLDoc = new XmlDocument();
+            outputXMLDoc.LoadXml(response);
+
+            XmlNodeList qbXMLMsgsRsNodeList = outputXMLDoc.GetElementsByTagName("CompanyRet");
+            XmlNodeList CompanyRet = qbXMLMsgsRsNodeList.Item(0).ChildNodes;
+
+            Company company = new Company();
+
+            foreach (XmlNode node in CompanyRet)
+            {
+                if (node.Name.Equals("CompanyName"))
+                    company.name = node.InnerText;
+                else if (node.Name.Equals("Address"))
+                {
+                    foreach (XmlNode innerNode in node)
+                    {
+                        company.addressFull += " " + innerNode.InnerText;
+                    }
+
+                }
+                else if (node.Name.Equals("AddressBlock"))
+                {
+                    foreach (XmlNode innerNode in node)
+                    {
+                        company.addressBlock += " " + innerNode.InnerText;
+                    }
+
+                }
+
+            }
+
+/*            Console.WriteLine(company.name);
+            Console.WriteLine(company.addressFull);
+            Console.WriteLine(company.addressBlock);*/
+            return company;
+        }
 
     }
 }
