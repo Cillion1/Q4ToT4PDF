@@ -681,7 +681,7 @@ namespace QBToT4PDF
 
 
 
-            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
+/*            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
             Console.WriteLine("HIIII");
             Console.WriteLine("incomeTaxDeducted: " + report.incomeTaxDeducted);
             Console.WriteLine(report.employerCPPContribution);
@@ -690,10 +690,10 @@ namespace QBToT4PDF
             Console.WriteLine(report.employerEIPremium);
             Console.WriteLine(report.employmentIncome);
             Console.WriteLine(report.totalDeductionsReported);
-            Console.ReadLine();
+            Console.ReadLine();*/
 
 
-            //   EventHandlerObj.OpenT4Form();
+               EventHandlerObj.OpenT4Form();
 
 
 
