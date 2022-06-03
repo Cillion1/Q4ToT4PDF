@@ -161,7 +161,7 @@ namespace QBToT4PDF
             try
             {
                 rp = new RequestProcessor2();
-                rp.OpenConnection("", "IDN EmployeeAdd C# sample");
+                rp.OpenConnection("", Program.strAppName);
                 ticket = rp.BeginSession("", QBFileMode.qbFileOpenDoNotCare);
                 response = rp.ProcessRequest(ticket, input);
             }
@@ -191,8 +191,6 @@ namespace QBToT4PDF
         /// <returns> an object that holds data for the T4 Summary Report Quickbook</returns>
         public static PayrollSumReport getPayrollSumAttribute(string year)
         {
-            //Console.WriteLine(response + "\n");
-
             XmlDocument inputXMLDoc = CreateXmlHeaders();
             XmlElement qbXMLMsgsRq = (XmlElement)inputXMLDoc.GetElementsByTagName("QBXMLMsgsRq")[0];
 
@@ -298,8 +296,6 @@ namespace QBToT4PDF
             string input = inputXMLDoc.OuterXml;
 
             string response = SetupConnection(input);
-
-            Console.WriteLine(response);
 
             XmlDocument outputXMLDoc = new XmlDocument();
             outputXMLDoc.LoadXml(response);

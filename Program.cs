@@ -109,7 +109,7 @@ namespace QBToT4PDF
     {
 
         enum QBSubscriptionType { Data, UI, UIExtension };
-        static string strAppName = "QB C# Event Sample";
+        public static string strAppName = "QuickBook T4 AutoFill";
 
         // CoInitializeEx() can be used to set the apartment model
         // of individual threads.
@@ -680,20 +680,20 @@ namespace QBToT4PDF
             */
 
 
-
-/*            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
+            /*
+            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
             Console.WriteLine("HIIII");
-            Console.WriteLine("incomeTaxDeducted: " + report.incomeTaxDeducted);
+            Console.WriteLine(report.incomeTaxDeducted);
             Console.WriteLine(report.employerCPPContribution);
             Console.WriteLine(report.employeeCPPContribution);
             Console.WriteLine(report.employeeEIPremium);
             Console.WriteLine(report.employerEIPremium);
             Console.WriteLine(report.employmentIncome);
             Console.WriteLine(report.totalDeductionsReported);
-            Console.ReadLine();*/
+            Console.ReadLine();
+            */
 
-
-               EventHandlerObj.OpenT4Form();
+               //EventHandlerObj.OpenT4Form();
 
 
 
@@ -703,7 +703,7 @@ namespace QBToT4PDF
 
 
             // DO NOT REMOVE, This creates and establishes a server
-            /*
+            
             try
             {
                 if (!ProcessArguments(args))
@@ -749,7 +749,7 @@ namespace QBToT4PDF
             {
                 Console.WriteLine("Unexpected error in program - " + ex.Message);
             }
-            */
+            
         }
     }
 }
