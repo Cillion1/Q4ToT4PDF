@@ -161,7 +161,7 @@ namespace QBToT4PDF
             try
             {
                 rp = new RequestProcessor2();
-                rp.OpenConnection("", "IDN EmployeeAdd C# sample");
+                rp.OpenConnection("", Program.strAppName);
                 ticket = rp.BeginSession("", QBFileMode.qbFileOpenDoNotCare);
                 response = rp.ProcessRequest(ticket, input);
             }

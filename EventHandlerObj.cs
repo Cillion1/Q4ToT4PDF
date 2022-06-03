@@ -99,49 +99,6 @@ namespace QBToT4PDF
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
-
-            // Define file dialog filters
-            /*
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
-            {
-                InitialDirectory = @"D:\",
-                Title = "Browse Text Files",
-
-                CheckFileExists = true,
-                CheckPathExists = true,
-
-                DefaultExt = "pdf",
-                Filter = "pdf files (*.pdf)|*.pdf",
-                FilterIndex = 2,
-                RestoreDirectory = true,
-
-                ReadOnlyChecked = true,
-                ShowReadOnly = true
-            };
-
-            // User starts choosing a file
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = openFileDialog1.FileName;
-
-                FileInfo file_info = new FileInfo(filePath);
-                string fileName = Path.GetFileNameWithoutExtension(file_info.ToString());
-
-                string endDest = file_info.DirectoryName + "\\" + fileName + " - Filled.pdf";
-
-                FileInfo file = new FileInfo(endDest);
-                file.Directory.Create();
-
-                //InfoProcessor processor = new InfoProcessor();
-                new InfoProcessor().ManipulatePdf(filePath, endDest, report, company);
-                MessageBox.Show("Finished Creating T4 PDF file");
-
-            }
-            else
-            {
-                MessageBox.Show("Error: Could not fill in T4 form");
-            }
-            */
         }
     }
 
