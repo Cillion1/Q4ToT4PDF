@@ -109,7 +109,7 @@ namespace QBToT4PDF
     {
 
         enum QBSubscriptionType { Data, UI, UIExtension };
-        static string strAppName = "QB C# Event Sample";
+        static string strAppName = "QuickBook T4 AutoFill";
 
         // CoInitializeEx() can be used to set the apartment model
         // of individual threads.

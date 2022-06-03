@@ -81,7 +81,27 @@ namespace QBToT4PDF
             report = InfoProcessor.getEmpdata(report, "2021");
             Company company = InfoProcessor.getCompanyInfo();
 
+            try
+            {
+                string filePath = Path.GetDirectoryName(Application.ExecutablePath);
+                string fileName = "t4sum-fill-21e";
+
+                string src = filePath + "\\" + fileName + ".pdf";
+                string endDest = filePath + "\\" + fileName + " - Filled.pdf";
+
+                FileInfo file = new FileInfo(endDest);
+                file.Directory.Create();
+
+                //InfoProcessor processor = new InfoProcessor();
+                new InfoProcessor().ManipulatePdf(src, endDest, report, company);
+                MessageBox.Show("Finished Creating T4 PDF file");
+            } catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
             // Define file dialog filters
+            /*
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
                 InitialDirectory = @"D:\",
@@ -103,27 +123,25 @@ namespace QBToT4PDF
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog1.FileName;
-                Debug.WriteLine(filePath);
 
                 FileInfo file_info = new FileInfo(filePath);
                 string fileName = Path.GetFileNameWithoutExtension(file_info.ToString());
-                Debug.WriteLine(fileName);
 
-                string endDest = file_info.DirectoryName + "\\" + fileName + "123.pdf";
-                Debug.WriteLine(endDest);
+                string endDest = file_info.DirectoryName + "\\" + fileName + " - Filled.pdf";
 
                 FileInfo file = new FileInfo(endDest);
                 file.Directory.Create();
 
                 //InfoProcessor processor = new InfoProcessor();
                 new InfoProcessor().ManipulatePdf(filePath, endDest, report, company);
-                MessageBox.Show("Finished Creating T4 PDF file", "T4 Form");
+                MessageBox.Show("Finished Creating T4 PDF file");
 
             }
             else
             {
                 MessageBox.Show("Error: Could not fill in T4 form");
             }
+            */
         }
     }
 
