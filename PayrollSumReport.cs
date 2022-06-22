@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * Payroll Summary instance containing info from the Payroll Summary Report in Quickbook
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +43,10 @@ namespace QBToT4PDF
             numEmployee = "0";
         }
 
-        public void calTotalDeduction()
+        /// <summary>
+        /// Adds the total of each value up to calculate total deductions.
+        /// </summary>
+        public void CalcTotalDeduction()
         {
            double temp = Convert.ToDouble(this.incomeTaxDeducted) + Convert.ToDouble(this.employerCPPContribution) + Convert.ToDouble(this.employeeCPPContribution) + Convert.ToDouble(this.employeeEIPremium) + Convert.ToDouble(this.employerEIPremium);
            this.totalDeductionsReported = Convert.ToString(temp);

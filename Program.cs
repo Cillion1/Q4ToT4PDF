@@ -1,3 +1,16 @@
+/* 
+ * This program uses many of the functionalities found in Quickbook's sample code
+ * "SubscribeAndHandleQBEvent"
+ * (https://developer.intuit.com/app/developer/qbdesktop/docs/develop/sample-applications-and-code#subscribeandhandleqbevent-desktop)
+ * 
+ * Main program. Creates a out of COM server that establishes a connection between Quickbook and the program.
+ * This allows Quickbook to run our program when the menu item is clicked on.
+ * 
+ * Avoid touching the IClassFactory, ReferenceCountedObject, and the ClassFactoryBase class if you do not know what you are doing.
+ * 
+ * If Quickbook does not want to accept the XML response, recompile in x86.
+ */
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -546,7 +559,7 @@ namespace QBToT4PDF
             listEventSubscription.AppendChild(requestXMLDoc.CreateElement("ListEventOperation")).InnerText = "Delete";
 
             string strRetString = requestXMLDoc.OuterXml;
-            LogXmlData(@"C:\Temp\DataEvent.xml", strRetString);
+            //LogXmlData(@"C:\Temp\DataEvent.xml", strRetString);
             return strRetString;
             
         }
@@ -593,7 +606,7 @@ namespace QBToT4PDF
             XmlElement menuExtensionSubscription = requestXMLDoc.CreateElement("MenuExtensionSubscription");
             uiExtEventSubscriptionAdd.AppendChild(menuExtensionSubscription);
 
-            //Add To menu Item // To Cusomter Menu
+            //Add To menu Item // To File Menu
             menuExtensionSubscription.AppendChild(requestXMLDoc.CreateElement("AddToMenu")).InnerText = "File";
 
 
@@ -613,7 +626,7 @@ namespace QBToT4PDF
           */
 
             string strRetString = requestXMLDoc.OuterXml;
-            LogXmlData(@"C:\Temp\UIExtension.xml", strRetString);
+            //LogXmlData(@"C:\Temp\UIExtension.xml", strRetString);
             return strRetString;
 
         }
@@ -645,7 +658,7 @@ namespace QBToT4PDF
 
 
             string strRetString = requestXMLDoc.OuterXml;
-            LogXmlData(@"C:\Temp\Unsubscribe.xml", strRetString);
+            //LogXmlData(@"C:\Temp\Unsubscribe.xml", strRetString);
             return strRetString;
 
         }
@@ -668,42 +681,15 @@ namespace QBToT4PDF
         [STAThread]
         static void Main(string[] args)
         {
-            /*
-            string endDest = ".\\fill_form.pdf";
-            string filePath = ".\\t4sum-fill-21e.pdf";
-
-            FileInfo file = new FileInfo(endDest);
-            file.Directory.Create();
-
-            //InfoProcessor processor = new InfoProcessor();
-            new InfoProcessor().ManipulatePdf(filePath, endDest);
-            */
-
-
-            /*
-            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
-            Console.WriteLine("HIIII");
-            Console.WriteLine(report.incomeTaxDeducted);
-            Console.WriteLine(report.employerCPPContribution);
-            Console.WriteLine(report.employeeCPPContribution);
-            Console.WriteLine(report.employeeEIPremium);
-            Console.WriteLine(report.employerEIPremium);
-            Console.WriteLine(report.employmentIncome);
-            Console.WriteLine(report.totalDeductionsReported);
-            Console.ReadLine();
-            */
-
-               //EventHandlerObj.OpenT4Form();
-
-
-
-
-
-
-
-
-            // DO NOT REMOVE, This creates and establishes a server
+            // For testing purposes. Uncomment this line to run just the main function.
             
+            //EventHandlerObj.OpenT4Form();
+
+            /* Creates and establlishes a server an out of COM server.
+             * 
+             * For testing purposes, you can comment out this block of code and instead
+             * just run the main function that you want to test.
+             */
             try
             {
                 if (!ProcessArguments(args))

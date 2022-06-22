@@ -1,3 +1,9 @@
+/*
+ * Class that handles an event when the menu item is clicked.
+ * 
+ * For most development purposes, you only need to modify parts under UIExtensionEvent.
+ */
+
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -51,7 +57,7 @@ namespace QBToT4PDF
                         break;
 
                     case "UIExtensionEvent":
-                        //Handle UI Extension Event HERE
+                        // Run our functions here when we click the menu item.
                         OpenT4Form();
                         
                         break;
@@ -69,7 +75,7 @@ namespace QBToT4PDF
         }
 
         /// <summary>
-        /// Function to run when an event is processed
+        /// Function to run when an event is executed
         /// 
         /// Opens a file dialog to grab the T4 pdf file and creates a new file with a filled-in T4 form file.
         /// 
@@ -77,26 +83,42 @@ namespace QBToT4PDF
         /// </summary>
         public static void OpenT4Form()
         {
-            PayrollSumReport report = InfoProcessor.getPayrollSumAttribute("2021");
-            report = InfoProcessor.getEmpdata(report, "2021");
-            Company company = InfoProcessor.getCompanyInfo();
+            // Year to grab report from. If you want the current year at all times. Use DateTime.Now.Year
+            string year = "2021";
 
+            // Define class instances to store information from Quickbook
+            PayrollSumReport report = InfoProcessor.GetPayrollSumAttribute(year);
+            report = InfoProcessor.GetEmployeeData(report, year);
+            Company company = InfoProcessor.GetCompanyInfo();
+
+            // Find the T4 summary page and create a new copy of it with a filled form.
             try
             {
-                string filePath = Path.GetDirectoryName(Application.ExecutablePath);
+                // Grabs the directory of the pdf file
+                string filePath = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)).ToString();
+
+                // Default T4 file name. File from https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t4.html
                 string fileName = "t4sum-fill-21e";
 
+                // Find the T4 pdf file
                 string src = filePath + "\\" + fileName + ".pdf";
+
+                // Location and name of filled pdf. This should be the same directory as the original filled pdf.
                 string endDest = filePath + "\\" + fileName + " - Filled.pdf";
 
+                Console.WriteLine("Creating filled T4 Summary at " + endDest);
+
+                // Create base filled pdf
                 FileInfo file = new FileInfo(endDest);
                 file.Directory.Create();
 
-                //InfoProcessor processor = new InfoProcessor();
-                new InfoProcessor().ManipulatePdf(src, endDest, report, company);
+                // Start filling the T4 Summary pdf.
+                new InfoProcessor().FillT4PDF(src, endDest, report, company);
+
                 MessageBox.Show("Finished Creating T4 PDF file");
             } catch (Exception ex)
             {
+                // Error message if something wrong happens.
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
