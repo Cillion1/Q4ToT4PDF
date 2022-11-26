@@ -1,3 +1,7 @@
+# Q4ToT4PDF
+
+A Quickbook add-on implementation to autofill a T4 Form directly from Quickbooks. 
+
 Steps to execute the program.
 
 1. Run the program 'InstallT4Button.bat' as Administrator.
